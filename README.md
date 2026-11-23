@@ -61,3 +61,7 @@ Photographs live in `public/brew/`; see the README there for how they were produ
 `_archive/` holds the earlier single-file static version, and `_archive/svg/` the retired
 `Facade`/`Staircase` illustrations and the retired `FlipBoard`, `LatteArt`, `Brew` and `Clock`
 sections. `components/hours.js` stays — `Visit` reads the opening hours from it.
+
+## Requirements
+
+Node 20.9 or newer (Next 16). The repo pins this in `package.json` `engines`.
