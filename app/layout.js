@@ -29,12 +29,25 @@ const script = Yellowtail({
   display: "swap",
 });
 
+/* The public host is only known at build time. Prefer an explicit
+   NEXT_PUBLIC_SITE_URL (set this once you point a real domain at the
+   site), then Vercel's stable production domain, then the per-deploy
+   URL, and only fall back to the placeholder in site.js. Without this
+   every share card and canonical link points at a domain that does
+   not exist. */
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL &&
+    `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
+  (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
+  SITE.url;
+
 const DESCRIPTION =
   "An espresso bar, kitchen and pasticceria on the corner — burgers, pasta, pizza and " +
   "pastry, served all day at the nine-metre long table.";
 
 export const metadata = {
-  metadataBase: new URL(SITE.url),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: `${SITE.name} — espresso bar, kitchen & pasticceria`,
     template: `%s · ${SITE.name}`,
@@ -69,10 +82,10 @@ const JSON_LD = {
   "@type": "CafeOrCoffeeShop",
   name: SITE.name,
   description: DESCRIPTION,
-  url: SITE.url,
+  url: SITE_URL,
   telephone: SITE.phone,
   email: SITE.email,
-  image: `${SITE.url}/brew/01.jpg`,
+  image: `${SITE_URL}/brew/01.jpg`,
   servesCuisine: ["Coffee", "Italian", "Breakfast", "Burgers"],
   priceRange: "₹₹",
   address: {
