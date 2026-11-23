@@ -1,0 +1,34 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--cream);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.tiles {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+.tiles i { background: var(--red); transform-origin: center; }
+.mark {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(3.8rem, 14vw, 9rem);
+  line-height: 1;
+  color: var(--paper);
+  text-shadow: 0 0.05em 0 rgba(0, 0, 0, 0.16);
+}
+.sub {
+  position: absolute;
+  z-index: 2;
+  bottom: clamp(26px, 6vh, 56px);
+  color: var(--paper);
+  font-size: 0.66rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}

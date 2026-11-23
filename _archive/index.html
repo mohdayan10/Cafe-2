@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--SKELETON-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--/SKELETON-->
+<title>Oro House</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Oro House — a gingham-wrapped coffee house: espresso, pasticceria and gold light, served under the red staircase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,700&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Yellowtail&display=swap">
+<style>
+/* ──────────────────────────────────────────────────────────────
+   ORO HOUSE — layout concept: full-bleed editorial bands stacked
+   like the building itself: cream plaster, red gingham, gold light.
+   Committed single (warm/light) theme: the brand is one world.
+   ────────────────────────────────────────────────────────────── */
+:root{
+  color-scheme: light;
+  /* colour */
+  --cream:#FBF3E4;        /* plaster / paper */
+  --cream-deep:#F2E4CA;   /* shadowed plaster */
+  --red:#D81F26;          /* oro sign red */
+  --red-deep:#8E1419;     /* the staircase */
+  --gold:#C08A2E;         /* cove lighting, lettering */
+  --gold-soft:#E6C47A;    /* lamp glow */
+  --ink:#2A1710;          /* espresso brown-black */
+  --ink-soft:#6B5243;
+  --white:#FFFDF8;
+  /* type */
+  --display:"Bodoni Moda", "Didot", "Times New Roman", serif;
+  --script:"Yellowtail", "Brush Script MT", cursive;
+  --body:"Jost", "Futura", "Avenir Next", system-ui, sans-serif;
+  /* rhythm */
+  --gut: max(20px, env(safe-area-inset-left, 0px));
+  --gut-r: max(20px, env(safe-area-inset-right, 0px));
+  --maxw: 1240px;
+  --ease: cubic-bezier(.19,1,.22,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{
+  margin:0; background:var(--cream); color:var(--ink);
+  font-family:var(--body); font-weight:300; font-size:clamp(15px,1.05vw,17px);
+  line-height:1.65; letter-spacing:.005em;
+  overflow-x:hidden;
+}
+img{max-width:100%; display:block}
+a{color:inherit; text-decoration:none}
+button{font:inherit; color:inherit}
+::selection{background:var(--red); color:var(--white)}
+:focus-visible{outline:2px solid var(--red); outline-offset:3px; border-radius:2px}
+
+/* ── gingham: the house pattern, used as a material ── */
+.gingham{
+  background-color:var(--white);
+  background-image:
+    linear-gradient(90deg, rgba(216,31,38,.55) 50%, transparent 50%),
+    linear-gradient(0deg,  rgba(216,31,38,.55) 50%, transparent 50%);
+  background-size:var(--sq,56px) var(--sq,56px);
+}
+.checker{
+  background-color:var(--white);
+  background-image:
+    linear-gradient(45deg, var(--red-deep) 25%, transparent 25%, transparent 75%, var(--red-deep) 75%),
+    linear-gradient(45deg, var(--red-deep) 25%, transparent 25%, transparent 75%, var(--red-deep) 75%);
+  background-size:var(--sq,40px) var(--sq,40px);
+  background-position:0 0, calc(var(--sq,40px)/2) calc(var(--sq,40px)/2);
+}
+
+/* ── shared shells ── */
+.wrap{width:100%; max-width:var(--maxw); margin-inline:auto; padding-left:var(--gut); padding-right:var(--gut-r)}
+.band{position:relative; padding-block:clamp(72px,9vw,140px)}
+.eyebrow{
+  font-size:.72rem; letter-spacing:.34em; text-transform:uppercase; font-weight:500;
+  color:var(--red); display:flex; align-items:center; gap:.9em;
+}
+.eyebrow::before{content:""; width:34px; height:7px; flex:none;
+  background-image:linear-gradient(90deg,var(--red) 50%,transparent 50%); background-size:14px 7px}
+h1,h2,h3,h4{font-family:var(--display); font-weight:400; margin:0; text-wrap:balance; letter-spacing:-.015em}
+h2{font-size:clamp(2.1rem,5.2vw,4.1rem); line-height:1.02}
+h3{font-size:clamp(1.3rem,2.2vw,1.8rem); line-height:1.15}
+p{margin:0}
+.lede{font-size:clamp(1.02rem,1.35vw,1.2rem); color:var(--ink-soft); max-width:62ch}
+.script{font-family:var(--script); font-weight:400; letter-spacing:0}
+
+/* ── buttons ── */
+.btn{
+  --b:var(--red);
+  position:relative; display:inline-flex; align-items:center; gap:.7em;
+  padding:.95em 1.9em; border:1px solid var(--b); border-radius:999px;
+  background:transparent; color:var(--b); cursor:pointer; overflow:hidden; isolation:isolate;
+  font-size:.78rem; letter-spacing:.2em; text-transform:uppercase; font-weight:500;
+  transition:color .45s var(--ease), border-color .45s var(--ease), transform .35s var(--ease);
+}
+.btn::after{
+  content:""; position:absolute; inset:0; z-index:-1; background:var(--b);
+  transform:translateY(101%); transition:transform .55s var(--ease);
+}
+.btn:hover{color:var(--white)}
+.btn:hover::after{transform:translateY(0)}
+.btn--solid{background:var(--red); color:var(--white); --b:var(--red)}
+.btn--solid::after{background:var(--ink)}
+.btn--solid:hover{border-color:var(--ink)}
+.btn--light{--b:var(--white); color:var(--white)}
+.btn--light::after{background:var(--white)}
+.btn--light:hover{color:var(--red-deep)}
+.btn .dot{width:6px; height:6px; background:currentColor; border-radius:50%; transition:transform .4s var(--ease)}
+.btn:hover .dot{transform:scale(1.9)}
+
+/* ══ PRELOADER ══ */
+#loader{
+  position:fixed; inset:0; z-index:9999; background:var(--cream);
+  display:grid; place-items:center; overflow:hidden;
+}
+#loader .tiles{position:absolute; inset:0; display:grid;
+  grid-template-columns:repeat(8,1fr); grid-template-rows:repeat(8,1fr)}
+#loader .tiles i{background:var(--red); transform:scale(0); transform-origin:center;
+  animation:tilePop .5s var(--ease) forwards}
+@keyframes tilePop{to{transform:scale(1)}}
+#loader .mark{
+  position:relative; z-index:2; font-family:var(--script);
+  font-size:clamp(3.6rem,13vw,8rem); color:var(--white); line-height:1;
+  opacity:0; transform:translateY(.25em) rotate(-3deg);
+  animation:markIn .9s .55s var(--ease) forwards; text-shadow:0 .06em 0 rgba(0,0,0,.18);
+}
+@keyframes markIn{to{opacity:1; transform:translateY(0) rotate(-3deg)}}
+#loader.done{animation:liftOut 1s .25s var(--ease) forwards}
+@keyframes liftOut{to{transform:translateY(-102%)}}
+html.loading{overflow:hidden}
+
+/* ══ NAV ══ */
+.nav{
+  position:fixed; top:env(safe-area-inset-top,0px); left:0; right:0; z-index:200;
+  transition:background .5s var(--ease), box-shadow .5s var(--ease), padding .5s var(--ease);
+  padding-block:22px;
+}
+.nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:24px}
+.nav.stuck{background:rgba(251,243,228,.92); backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 rgba(42,23,16,.09); padding-block:11px}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px);
+  z-index:201; background:var(--cream)}
+.brand{font-family:var(--script); font-size:2.15rem; line-height:1; color:var(--red);
+  transition:font-size .5s var(--ease), color .5s var(--ease)}
+.nav.stuck .brand{font-size:1.75rem}
+.nav.onphoto:not(.stuck) .brand{color:var(--white); text-shadow:0 2px 14px rgba(0,0,0,.35)}
+.navlinks{display:flex; align-items:center; gap:clamp(18px,2.4vw,38px)}
+.navlinks a{font-size:.74rem; letter-spacing:.22em; text-transform:uppercase; position:relative; padding-block:4px}
+.navlinks a::after{content:""; position:absolute; left:0; bottom:0; width:100%; height:1px;
+  background:currentColor; transform:scaleX(0); transform-origin:right; transition:transform .45s var(--ease)}
+.navlinks a:hover::after{transform:scaleX(1); transform-origin:left}
+.nav.onphoto:not(.stuck) .navlinks a{color:var(--white)}
+.nav .btn{padding:.72em 1.4em}
+.nav.onphoto:not(.stuck) .btn{--b:var(--white); color:var(--white)}
+.nav.onphoto:not(.stuck) .btn::after{background:var(--white)}
+.nav.onphoto:not(.stuck) .btn:hover{color:var(--red)}
+.burger{display:none; width:42px; height:42px; border:1px solid currentColor; border-radius:50%;
+  background:none; cursor:pointer; align-items:center; justify-content:center; flex-direction:column; gap:5px}
+.burger span{display:block; width:16px; height:1.5px; background:currentColor; transition:transform .4s var(--ease), opacity .3s}
+.navmob{position:fixed; inset:0; z-index:199; background:var(--red); display:grid; place-items:center;
+  clip-path:circle(0% at 92% 4%); transition:clip-path .8s var(--ease); pointer-events:none}
+.navmob.open{clip-path:circle(150% at 92% 4%); pointer-events:auto}
+.navmob ul{list-style:none; margin:0; padding:0; display:grid; gap:14px; text-align:center}
+.navmob a{font-family:var(--display); font-size:clamp(2rem,9vw,3rem); color:var(--white)}
+
+/* ══ HERO ══ */
+.hero{position:relative; min-height:min(96vh,860px); display:flex; align-items:flex-end;
+  overflow:hidden; background:var(--ink)}
+.hero__media{position:absolute; inset:-16% 0; will-change:transform}
+.hero__media img{width:100%; height:100%; object-fit:cover; object-position:58% 50%;
+  transform:scale(1.08); animation:heroZoom 2.4s .35s var(--ease) forwards}
+@keyframes heroZoom{to{transform:scale(1)}}
+.hero::after{content:""; position:absolute; inset:0;
+  background:linear-gradient(185deg, rgba(42,23,16,.52) 0%, rgba(42,23,16,.06) 32%, rgba(42,23,16,.18) 58%, rgba(42,23,16,.82) 100%)}
+.hero__dust{position:absolute; inset:0; z-index:1; pointer-events:none; mix-blend-mode:screen; opacity:.85}
+.hero__inner{position:relative; z-index:3; width:100%; padding-block:0 clamp(44px,7vw,86px)}
+.hero__word{
+  font-family:var(--script); color:var(--white); line-height:.82;
+  font-size:clamp(5.5rem,22vw,17rem); margin:0 0 .06em -.04em;
+  text-shadow:0 .03em 0 rgba(142,20,25,.55), 0 .25em .6em rgba(0,0,0,.35);
+}
+.hero__word span{display:inline-block; opacity:0; transform:translateY(.42em) rotate(8deg);
+  animation:letterUp 1.15s var(--ease) forwards}
+@keyframes letterUp{to{opacity:1; transform:none}}
+.hero__row{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:28px}
+.hero__tag{font-family:var(--display); font-style:italic; color:var(--white);
+  font-size:clamp(1.15rem,2.5vw,2rem); max-width:16ch; line-height:1.18}
+.hero__meta{color:rgba(255,253,248,.82); font-size:.74rem; letter-spacing:.24em;
+  text-transform:uppercase; display:grid; gap:7px; text-align:right}
+.hero__cta{display:flex; gap:14px; flex-wrap:wrap; margin-top:26px}
+.scrollcue{position:absolute; left:50%; bottom:18px; z-index:4; transform:translateX(-50%);
+  width:1px; height:58px; background:linear-gradient(var(--white),transparent); overflow:hidden}
+.scrollcue::after{content:""; position:absolute; inset:0; background:var(--white);
+  animation:cue 2.2s infinite var(--ease)}
+@keyframes cue{0%{transform:translateY(-100%)}60%,100%{transform:translateY(100%)}}
+
+/* ══ MARQUEE ══ */
+.marq{background:var(--red-deep); color:var(--cream); padding-block:14px; overflow:hidden;
+  border-block:1px solid rgba(42,23,16,.18)}
+.marq__track{display:flex; gap:0; width:max-content; animation:slide 34s linear infinite}
+.marq:hover .marq__track{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-50%)}}
+.marq__track b{font-family:var(--display); font-style:italic; font-weight:400;
+  font-size:clamp(1rem,1.7vw,1.4rem); padding-inline:.7em; white-space:nowrap; display:flex;
+  align-items:center; gap:1.4em}
+.marq__track b::after{content:""; width:9px; height:9px; background:var(--gold); transform:rotate(45deg)}
+
+/* ══ REVEALS (JS only — page is complete without JS) ══ */
+html.js .rv{opacity:0; transform:translateY(34px); transition:opacity 1s var(--ease), transform 1.1s var(--ease)}
+html.js .rv.in{opacity:1; transform:none}
+html.js .rv-img{clip-path:inset(0 0 100% 0); transition:clip-path 1.25s var(--ease)}
+html.js .rv-img.in{clip-path:inset(0 0 0 0)}
+html.js .rv-line span{display:inline-block; transform:translateY(105%); transition:transform .95s var(--ease)}
+html.js .rv-line{overflow:hidden; display:block}
+html.js .rv-line.in span{transform:none}
+
+/* ══ HOUSE ══ */
+.house{background:var(--cream)}
+.house__grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,5vw,78px); align-items:center}
+.figure{position:relative; overflow:hidden; border-radius:2px}
+.figure img{width:100%; height:100%; object-fit:cover; transition:transform 1.4s var(--ease)}
+.figure:hover img{transform:scale(1.045)}
+.figure--tall{aspect-ratio:3/4}
+.figure__cap{position:absolute; left:0; bottom:0; background:var(--cream); color:var(--ink);
+  font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; padding:10px 16px}
+.house__text{display:grid; gap:22px; align-content:start}
+.rule{height:1px; background:linear-gradient(90deg,var(--red),transparent)}
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:8px}
+.stat b{display:block; font-family:var(--display); font-size:clamp(1.9rem,3.6vw,2.9rem); line-height:1;
+  color:var(--red-deep); font-variant-numeric:tabular-nums}
+.stat span{font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft)}
+
+/* ══ STAIRCASE SPLIT ══ */
+.split{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(24px,4vw,60px); align-items:stretch}
+.split .figure{min-height:420px}
+.quote{background:var(--red); color:var(--cream); padding:clamp(28px,4vw,56px); display:grid;
+  align-content:center; gap:20px; position:relative; overflow:hidden}
+.quote::before{content:""; position:absolute; inset:auto -10% -40% auto; width:360px; height:360px;
+  border-radius:50%; background:radial-gradient(circle,rgba(255,253,248,.18),transparent 65%)}
+.quote p{font-family:var(--display); font-style:italic; font-size:clamp(1.3rem,2.6vw,2.05rem); line-height:1.28; position:relative}
+.quote cite{font-style:normal; font-size:.7rem; letter-spacing:.24em; text-transform:uppercase; opacity:.85}
+
+/* ══ MENU ══ */
+.menu{background:var(--ink); color:var(--cream); position:relative; overflow:hidden}
+.menu .eyebrow{color:var(--gold)}
+.menu .eyebrow::before{background-image:linear-gradient(90deg,var(--gold) 50%,transparent 50%)}
+.menu__head{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:22px; margin-bottom:38px}
+.tabs{display:flex; gap:8px; flex-wrap:wrap}
+.tab{background:none; border:1px solid rgba(251,243,228,.28); border-radius:999px; padding:.62em 1.3em;
+  font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; cursor:pointer; color:var(--cream);
+  transition:background .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease)}
+.tab[aria-selected="true"]{background:var(--gold); border-color:var(--gold); color:var(--ink)}
+.menu__panel{display:grid; grid-template-columns:repeat(2,1fr); gap:0 clamp(30px,5vw,70px)}
+.menu__panel[hidden]{display:none}
+.item{display:grid; grid-template-columns:1fr auto; gap:4px 16px; align-items:baseline;
+  padding:18px 2px; border-bottom:1px solid rgba(251,243,228,.14); position:relative; isolation:isolate;
+  opacity:0; transform:translateY(16px); animation:itemIn .7s var(--ease) forwards}
+@keyframes itemIn{to{opacity:1; transform:none}}
+.item::before{content:""; position:absolute; left:-14px; right:-14px; top:0; bottom:0; z-index:-1;
+  background:rgba(251,243,228,.05); opacity:0; transition:opacity .4s var(--ease)}
+.item:hover::before{opacity:1}
+.item h4{font-size:1.1rem; font-weight:500; display:flex; align-items:baseline; gap:.6em}
+.item .flag{font-family:var(--body); font-size:.58rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink); background:var(--gold); padding:.25em .6em; border-radius:999px}
+.item .price{font-family:var(--display); font-size:1.05rem; color:var(--gold); font-variant-numeric:tabular-nums}
+.item p{grid-column:1/-1; font-size:.86rem; color:rgba(251,243,228,.6); max-width:46ch}
+
+/* ══ TABLE PARALLAX BAND ══ */
+.strip{position:relative; height:min(62vh,520px); overflow:hidden; display:grid; place-items:center}
+.strip img{position:absolute; inset:-14% 0; width:100%; height:128%; object-fit:cover; will-change:transform}
+.strip::after{content:""; position:absolute; inset:0; background:rgba(42,23,16,.42)}
+.strip__t{position:relative; z-index:2; text-align:center; color:var(--white); display:grid; gap:14px; justify-items:center}
+.strip__t h2{font-style:italic}
+
+/* ══ VISIT ══ */
+.visit{background:var(--cream-deep)}
+.visit__grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(26px,4vw,64px)}
+.card{background:var(--white); padding:clamp(24px,3.4vw,42px); display:grid; gap:20px; align-content:start;
+  box-shadow:0 18px 50px -34px rgba(42,23,16,.5)}
+.hours{display:grid; gap:0}
+.hours div{display:grid; grid-template-columns:1fr auto; gap:14px; padding:11px 0;
+  border-bottom:1px dashed rgba(42,23,16,.18); font-size:.94rem}
+.hours dt{color:var(--ink-soft); letter-spacing:.06em}
+.hours dd{margin:0; font-variant-numeric:tabular-nums}
+.hours div.now{color:var(--red); font-weight:500}
+.field{display:grid; gap:7px}
+.field label{font-size:.66rem; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-soft)}
+.field input,.field select,.field textarea{
+  font:inherit; padding:.78em .9em; border:1px solid rgba(42,23,16,.22); background:var(--white);
+  border-radius:2px; color:var(--ink); transition:border-color .3s var(--ease), box-shadow .3s var(--ease)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(216,31,38,.12); outline:none}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.note{font-size:.8rem; color:var(--ink-soft)}
+.copyline{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.copybtn{border:1px solid rgba(42,23,16,.25); background:none; border-radius:999px; padding:.3em .85em;
+  font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; cursor:pointer}
+.copybtn:hover{border-color:var(--red); color:var(--red)}
+
+/* ══ FOOTER ══ */
+.foot{background:var(--ink); color:var(--cream); padding-block:clamp(48px,6vw,90px) 28px}
+.foot__word{font-family:var(--script); font-size:clamp(5rem,20vw,15rem); line-height:.8; color:var(--red);
+  text-align:center; margin-block:0 .12em; user-select:none}
+.foot__cols{display:flex; flex-wrap:wrap; gap:26px; justify-content:space-between;
+  border-top:1px solid rgba(251,243,228,.16); padding-top:24px; font-size:.74rem;
+  letter-spacing:.14em; text-transform:uppercase; color:rgba(251,243,228,.62)}
+.foot__cols a:hover{color:var(--gold)}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width:900px){
+  .house__grid,.split,.visit__grid,.menu__panel{grid-template-columns:1fr}
+  .split .figure{min-height:300px}
+  .navlinks{display:none}
+  .burger{display:flex}
+  .hero__meta{text-align:left}
+}
+@media (max-width:560px){
+  .grid2{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .hero{min-height:88vh}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important; animation-iteration-count:1!important;
+    transition-duration:.01ms!important; scroll-behavior:auto!important}
+  html.js .rv,html.js .rv-img,html.js .rv-line span{opacity:1; transform:none; clip-path:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ░░ PRELOADER ░░ -->
+<div id="loader" aria-hidden="true">
+  <div class="tiles"></div>
+  <div class="mark">oro</div>
+</div>
+
+<!-- ░░ NAV ░░ -->
+<header class="nav onphoto" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="Oro House, home">oro</a>
+    <nav class="navlinks" aria-label="Main">
+      <a href="#house">The House</a>
+      <a href="#menu">Menu</a>
+      <a href="#table">The Table</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <a href="#book" class="btn">Book a table <i class="dot"></i></a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="navmob" id="navmob">
+  <ul>
+    <li><a href="#house">The House</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#table">The Table</a></li>
+    <li><a href="#visit">Visit</a></li>
+    <li><a href="#book">Book a table</a></li>
+  </ul>
+</div>
+
+<main id="top">
+
+<!-- ░░ HERO ░░ -->
+<section class="hero">
+  <div class="hero__media" id="heroMedia">
+    <img src="assets/facade.jpg" alt="The Oro House facade: a red gingham-wrapped upper floor above white neoclassical columns, with the red oro sign hanging from a tree." fetchpriority="high">
+  </div>
+  <canvas class="hero__dust" id="dust" aria-hidden="true"></canvas>
+  <div class="hero__inner">
+    <div class="wrap">
+      <h1 class="hero__word" id="heroWord" aria-label="oro">oro</h1>
+      <div class="hero__row">
+        <div>
+          <p class="hero__tag">Coffee, pastry and gold light — served inside a picnic cloth.</p>
+          <div class="hero__cta">
+            <a href="#menu" class="btn btn--light">See the menu <i class="dot"></i></a>
+            <a href="#book" class="btn btn--light">Reserve <i class="dot"></i></a>
+          </div>
+        </div>
+        <div class="hero__meta">
+          <span>Open daily · 8:00 — 23:00</span>
+          <span>Espresso bar · Pasticceria · Kitchen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scrollcue" aria-hidden="true"></div>
+</section>
+
+<!-- ░░ MARQUEE ░░ -->
+<div class="marq" aria-hidden="true">
+  <div class="marq__track" id="marq"></div>
+</div>
+
+<!-- ░░ THE HOUSE ░░ -->
+<section class="band house" id="house">
+  <div class="wrap house__grid">
+    <div class="figure rv-img">
+      <img src="assets/interior.jpg" alt="Inside Oro House: a long checkerboard dining table, yellow plaid walls and a sculpted crimson staircase." loading="lazy">
+      <span class="figure__cap">The long table, ground floor</span>
+    </div>
+    <div class="house__text">
+      <p class="eyebrow rv">Est. in a corner house</p>
+      <h2 class="rv">A picnic cloth<br>thrown over<br><em>a palazzo.</em></h2>
+      <div class="rule rv"></div>
+      <p class="lede rv">Oro means gold. We built the house around that one idea: warm cove light that never
+        goes blue, brass on the door handles, and a red gingham skin pulled tight over plaster cornices.
+        Downstairs is the espresso bar and the long table. Upstairs, past the crimson staircase, is quieter —
+        for long lunches and slow afternoons.</p>
+      <div class="stats rv">
+        <div class="stat"><b data-count="9">0</b><span>Metre long table</span></div>
+        <div class="stat"><b data-count="18">0</b><span>Pastries baked daily</span></div>
+        <div class="stat"><b data-count="92">0</b><span>Seats, two floors</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ STAIRCASE ░░ -->
+<section class="band" style="padding-top:0">
+  <div class="wrap split">
+    <div class="figure rv-img">
+      <img src="assets/stairs.jpg" alt="The sculpted crimson staircase spiralling to the first floor." loading="lazy">
+    </div>
+    <blockquote class="quote rv">
+      <p>“We wanted one red you could see from the end of the street, and one staircase you'd climb twice —
+        once for the table upstairs, once for the photograph.”</p>
+      <cite>— The Oro House, on opening day</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ░░ MENU ░░ -->
+<section class="band menu" id="menu">
+  <div class="wrap">
+    <div class="menu__head">
+      <div>
+        <p class="eyebrow rv">Served all day</p>
+        <h2 class="rv" style="color:var(--cream)">The Menu</h2>
+      </div>
+      <div class="tabs rv" role="tablist" aria-label="Menu sections">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p-bar" id="t-bar">Espresso Bar</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-kitchen" id="t-kitchen">Kitchen</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-dolci" id="t-dolci">Pasticceria</button>
+      </div>
+    </div>
+
+    <div class="menu__panel" id="p-bar" role="tabpanel" aria-labelledby="t-bar">
+      <div class="item"><h4>Espresso</h4><span class="price">₹140</span><p>Single origin, pulled short. Ask for it in a glass.</p></div>
+      <div class="item"><h4>Cortado</h4><span class="price">₹190</span><p>Equal parts, no foam, served on the brass tray.</p></div>
+      <div class="item"><h4>Oro Cappuccino <span class="flag">House</span></h4><span class="price">₹220</span><p>Dusted with cocoa and a thread of gold cinnamon.</p></div>
+      <div class="item"><h4>Affogato</h4><span class="price">₹260</span><p>Fior di latte gelato drowned in a double shot.</p></div>
+      <div class="item"><h4>Cold Brew Tonic</h4><span class="price">₹250</span><p>Eighteen hours steeped, orange peel, long ice.</p></div>
+      <div class="item"><h4>Pot of Darjeeling</h4><span class="price">₹180</span><p>First flush, for the table upstairs.</p></div>
+    </div>
+
+    <div class="menu__panel" id="p-kitchen" role="tabpanel" aria-labelledby="t-kitchen" hidden>
+      <div class="item"><h4>Focaccia, tomato &amp; stracciatella</h4><span class="price">₹420</span><p>Baked at ten, gone by two.</p></div>
+      <div class="item"><h4>Cacio e Pepe</h4><span class="price">₹540</span><p>Pecorino, black pepper, nothing else.</p></div>
+      <div class="item"><h4>Truffle Tagliolini <span class="flag">Chef</span></h4><span class="price">₹690</span><p>Egg pasta rolled each morning, shaved at the table.</p></div>
+      <div class="item"><h4>Chicken Milanese</h4><span class="price">₹620</span><p>Pounded thin, rocket, lemon.</p></div>
+      <div class="item"><h4>Garden Panzanella</h4><span class="price">₹380</span><p>Yesterday's bread, today's tomatoes.</p></div>
+      <div class="item"><h4>Oro Club</h4><span class="price">₹450</span><p>Three storeys, like the house.</p></div>
+    </div>
+
+    <div class="menu__panel" id="p-dolci" role="tabpanel" aria-labelledby="t-dolci" hidden>
+      <div class="item"><h4>Cornetto</h4><span class="price">₹160</span><p>Plain, pistachio, or apricot. Out of the oven at 8.</p></div>
+      <div class="item"><h4>Maritozzo</h4><span class="price">₹240</span><p>Split bun, cold cream, one cherry.</p></div>
+      <div class="item"><h4>Tiramisù al Cucchiaio <span class="flag">House</span></h4><span class="price">₹320</span><p>Served in the glass, spoon standing up.</p></div>
+      <div class="item"><h4>Gelato, two scoops</h4><span class="price">₹260</span><p>Fior di latte, gianduja, salted caramel.</p></div>
+      <div class="item"><h4>Torta della Nonna</h4><span class="price">₹290</span><p>Pine nuts, pastry cream, powdered sugar.</p></div>
+      <div class="item"><h4>Checkerboard Cake</h4><span class="price">₹340</span><p>Cut from the square, like the table.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ TABLE STRIP ░░ -->
+<section class="strip" id="table">
+  <img src="assets/table.jpg" alt="The nine-metre checkerboard table in polished oak and cream tile." id="stripImg" loading="lazy">
+  <div class="strip__t wrap">
+    <p class="eyebrow" style="color:var(--cream); justify-content:center">Nine metres, one table</p>
+    <h2>Sit with strangers.</h2>
+    <p class="lede" style="color:rgba(255,253,248,.88); margin-inline:auto">
+      The long checkerboard runs the length of the room. No reservations on it before noon — take a square and stay.</p>
+  </div>
+</section>
+
+<!-- ░░ VISIT ░░ -->
+<section class="band visit" id="visit">
+  <div class="wrap">
+    <p class="eyebrow rv">Find us</p>
+    <h2 class="rv" style="margin-bottom:34px">Visit the house</h2>
+    <div class="visit__grid">
+      <div class="card rv">
+        <h3>Hours</h3>
+        <dl class="hours" id="hours">
+          <div data-day="1"><dt>Monday</dt><dd>8:00 — 22:00</dd></div>
+          <div data-day="2"><dt>Tuesday</dt><dd>8:00 — 22:00</dd></div>
+          <div data-day="3"><dt>Wednesday</dt><dd>8:00 — 22:00</dd></div>
+          <div data-day="4"><dt>Thursday</dt><dd>8:00 — 23:00</dd></div>
+          <div data-day="5"><dt>Friday</dt><dd>8:00 — 23:30</dd></div>
+          <div data-day="6"><dt>Saturday</dt><dd>9:00 — 23:30</dd></div>
+          <div data-day="0"><dt>Sunday</dt><dd>9:00 — 22:00</dd></div>
+        </dl>
+        <div class="rule"></div>
+        <div class="copyline"><strong>Oro House, 21 Garden Lane</strong>
+          <button class="copybtn" data-copy="Oro House, 21 Garden Lane">Copy address</button></div>
+        <div class="copyline"><span>+91 00000 00000</span>
+          <button class="copybtn" data-copy="+91 00000 00000">Copy number</button></div>
+        <p class="note">Walk-ins welcome at the long table. The first floor is by reservation after 7pm.</p>
+      </div>
+
+      <form class="card rv" id="book" novalidate>
+        <h3>Book a table</h3>
+        <div class="grid2">
+          <div class="field"><label for="bk-name">Name</label><input id="bk-name" name="name" required autocomplete="name"></div>
+          <div class="field"><label for="bk-phone">Phone</label><input id="bk-phone" name="phone" inputmode="tel" required autocomplete="tel"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="bk-date">Date</label><input id="bk-date" name="date" type="date" required></div>
+          <div class="field"><label for="bk-time">Time</label>
+            <select id="bk-time" name="time">
+              <option>09:00</option><option>11:00</option><option selected>13:00</option>
+              <option>16:00</option><option>19:00</option><option>21:00</option>
+            </select></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="bk-guests">Guests</label>
+            <select id="bk-guests" name="guests">
+              <option>1</option><option selected>2</option><option>3</option><option>4</option>
+              <option>5</option><option>6</option><option>7+</option>
+            </select></div>
+          <div class="field"><label for="bk-floor">Where</label>
+            <select id="bk-floor" name="floor">
+              <option>The long table</option><option>Ground floor booth</option><option>First floor</option>
+            </select></div>
+        </div>
+        <div class="field"><label for="bk-note">Anything we should know</label><textarea id="bk-note" name="note" rows="2"></textarea></div>
+        <button class="btn btn--solid" type="submit">Request the table <i class="dot"></i></button>
+        <p class="note" id="bk-msg" role="status">We confirm by phone within the hour.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__word" aria-hidden="true">oro</div>
+    <div class="foot__cols">
+      <span>Oro House · 21 Garden Lane</span>
+      <span>Open daily from 8:00</span>
+      <span>+91 00000 00000</span>
+      <span>Instagram · Facebook</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement;
+  root.classList.add("js","loading");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ── preloader: gingham tiles pop in, wordmark lands, curtain lifts ── */
+  (function loader(){
+    var el = document.getElementById("loader"); if(!el) return;
+    var tiles = el.querySelector(".tiles"), n = 64, frag = document.createDocumentFragment();
+    for(var i=0;i<n;i++){
+      var t = document.createElement("i");
+      var r = Math.floor(i/8), c = i%8;
+      t.style.opacity = ((r+c)%2===0) ? "1" : ".30";
+      t.style.animationDelay = (reduce ? 0 : (r+c)*28) + "ms";
+      frag.appendChild(t);
+    }
+    tiles.appendChild(frag);
+    var out = function(){
+      el.classList.add("done");
+      root.classList.remove("loading");
+      setTimeout(function(){ el.remove(); }, 1400);
+    };
+    setTimeout(out, reduce ? 150 : 1750);
+  })();
+
+  /* ── hero wordmark, letter by letter ── */
+  (function word(){
+    var w = document.getElementById("heroWord"); if(!w) return;
+    var txt = w.textContent.trim(); w.textContent = "";
+    txt.split("").forEach(function(ch,i){
+      var s = document.createElement("span");
+      s.textContent = ch;
+      s.style.animationDelay = (reduce ? 0 : 1850 + i*110) + "ms";
+      if(reduce){ s.style.opacity = 1; s.style.transform = "none"; }
+      w.appendChild(s);
+    });
+  })();
+
+  /* ── marquee ── */
+  (function marquee(){
+    var m = document.getElementById("marq"); if(!m) return;
+    var words = ["Espresso","Cornetti","Maritozzo","Gelato","Focaccia","Tiramisù","Cold Brew","Torta della Nonna"];
+    var html = words.map(function(w){ return "<b>"+w+"</b>"; }).join("");
+    m.innerHTML = html + html;
+  })();
+
+  /* ── scroll reveals ── */
+  (function reveals(){
+    var els = document.querySelectorAll(".rv, .rv-img, .rv-line");
+    if(!("IntersectionObserver" in window) || reduce){
+      els.forEach(function(e){ e.classList.add("in"); }); return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        var el = en.target, sibs = Array.prototype.slice.call(el.parentNode.children);
+        el.style.transitionDelay = Math.min(sibs.indexOf(el),5)*70 + "ms";
+        el.classList.add("in"); io.unobserve(el);
+      });
+    }, { rootMargin:"0px 0px -12% 0px", threshold:.14 });
+    els.forEach(function(e){ io.observe(e); });
+  })();
+
+  /* ── counters ── */
+  (function counters(){
+    var nums = document.querySelectorAll("[data-count]");
+    if(!("IntersectionObserver" in window)){ nums.forEach(function(n){ n.textContent = n.dataset.count; }); return; }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var el = e.target, target = +el.dataset.count, t0 = null;
+        if(reduce){ el.textContent = target; io.unobserve(el); return; }
+        function step(ts){
+          if(!t0) t0 = ts;
+          var p = Math.min((ts-t0)/1300, 1), eased = 1-Math.pow(1-p,3);
+          el.textContent = Math.round(target*eased);
+          if(p<1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step); io.unobserve(el);
+      });
+    }, { threshold:.6 });
+    nums.forEach(function(n){ io.observe(n); });
+  })();
+
+  /* ── nav state: solid after the hero, white over the photo ── */
+  (function nav(){
+    var nav = document.getElementById("nav"), hero = document.querySelector(".hero");
+    function onScroll(){
+      var y = window.scrollY || 0;
+      nav.classList.toggle("stuck", y > 60);
+      nav.classList.toggle("onphoto", y < hero.offsetHeight - 120);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive:true });
+
+    var burger = document.getElementById("burger"), mob = document.getElementById("navmob");
+    burger.addEventListener("click", function(){
+      var open = mob.classList.toggle("open");
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+      burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    });
+    mob.addEventListener("click", function(e){
+      if(e.target.tagName === "A"){ mob.classList.remove("open"); burger.setAttribute("aria-expanded","false"); }
+    });
+  })();
+
+  /* ── parallax: hero drifts, the table strip slides ── */
+  (function parallax(){
+    if(reduce) return;
+    var hero = document.getElementById("heroMedia"), strip = document.getElementById("stripImg");
+    var ticking = false;
+    function frame(){
+      var y = window.scrollY || 0, vh = window.innerHeight;
+      if(hero) hero.style.transform = "translate3d(0," + (y*0.12) + "px,0)";
+      if(strip){
+        var r = strip.parentNode.getBoundingClientRect();
+        if(r.top < vh && r.bottom > 0){
+          var p = (r.top + r.height/2 - vh/2) / vh;
+          strip.style.transform = "translate3d(0," + (p*-70) + "px,0)";
+        }
+      }
+      ticking = false;
+    }
+    window.addEventListener("scroll", function(){
+      if(!ticking){ requestAnimationFrame(frame); ticking = true; }
+    }, { passive:true });
+    frame();
+  })();
+
+  /* ── hero: drifting gold dust ── */
+  (function dust(){
+    var cv = document.getElementById("dust"); if(!cv || reduce) return;
+    var ctx = cv.getContext("2d"), parts = [], raf, dpr = Math.min(window.devicePixelRatio||1, 2);
+    function size(){
+      var r = cv.getBoundingClientRect();
+      cv.width = r.width*dpr; cv.height = r.height*dpr;
+      parts = [];
+      var n = Math.round(r.width*r.height/14000);
+      for(var i=0;i<n;i++) parts.push({
+        x:Math.random()*cv.width, y:Math.random()*cv.height,
+        r:(Math.random()*1.9+.5)*dpr, s:(Math.random()*.22+.05)*dpr,
+        a:Math.random()*.5+.15, d:Math.random()*Math.PI*2
+      });
+    }
+    function tick(){
+      ctx.clearRect(0,0,cv.width,cv.height);
+      for(var i=0;i<parts.length;i++){
+        var p = parts[i];
+        p.y -= p.s; p.d += .008; p.x += Math.sin(p.d)*.25;
+        if(p.y < -8){ p.y = cv.height+8; p.x = Math.random()*cv.width; }
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(230,196,122," + p.a + ")";
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+      }
+      raf = requestAnimationFrame(tick);
+    }
+    size(); tick();
+    window.addEventListener("resize", size);
+    document.addEventListener("visibilitychange", function(){
+      if(document.hidden){ cancelAnimationFrame(raf); } else { raf = requestAnimationFrame(tick); }
+    });
+  })();
+
+  /* ── menu tabs ── */
+  (function tabs(){
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+    function show(tab){
+      tabs.forEach(function(t){
+        var on = t === tab;
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        var panel = document.getElementById(t.getAttribute("aria-controls"));
+        panel.hidden = !on;
+        if(on) Array.prototype.forEach.call(panel.children, function(item,i){
+          item.style.animation = "none"; void item.offsetWidth;
+          item.style.animation = "";
+          item.style.animationDelay = (reduce ? 0 : i*65) + "ms";
+        });
+      });
+    }
+    tabs.forEach(function(t){
+      t.addEventListener("click", function(){ show(t); });
+      t.addEventListener("keydown", function(e){
+        var i = tabs.indexOf(t), nx = e.key === "ArrowRight" ? i+1 : e.key === "ArrowLeft" ? i-1 : -1;
+        if(nx < 0 || nx >= tabs.length) return;
+        e.preventDefault(); tabs[nx].focus(); show(tabs[nx]);
+      });
+    });
+  })();
+
+  /* ── magnetic buttons ── */
+  (function magnet(){
+    if(reduce || !window.matchMedia("(hover:hover)").matches) return;
+    document.querySelectorAll(".btn").forEach(function(b){
+      b.addEventListener("pointermove", function(e){
+        var r = b.getBoundingClientRect();
+        b.style.transform = "translate(" + ((e.clientX-r.left-r.width/2)*.18) + "px," +
+                                           ((e.clientY-r.top-r.height/2)*.3) + "px)";
+      });
+      b.addEventListener("pointerleave", function(){ b.style.transform = ""; });
+    });
+  })();
+
+  /* ── today's hours ── */
+  (function today(){
+    var d = new Date().getDay(), row = document.querySelector('#hours [data-day="'+d+'"]');
+    if(row){ row.classList.add("now"); row.querySelector("dt").textContent += " · today"; }
+  })();
+
+  /* ── copy buttons ── */
+  document.querySelectorAll(".copybtn").forEach(function(b){
+    b.addEventListener("click", function(){
+      var txt = b.dataset.copy, done = function(){
+        var old = b.textContent; b.textContent = "Copied";
+        setTimeout(function(){ b.textContent = old; }, 1600);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(done, function(){ select(b); });
+      } else select(b);
+      function select(){
+        var r = document.createRange(); r.selectNodeContents(b.previousElementSibling);
+        var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      }
+    });
+  });
+
+  /* ── reservation form ── */
+  (function book(){
+    var f = document.getElementById("book"); if(!f) return;
+    var msg = document.getElementById("bk-msg");
+    var date = document.getElementById("bk-date");
+    date.min = new Date().toISOString().slice(0,10);
+    if(!date.value) date.value = date.min;
+    f.addEventListener("submit", function(e){
+      e.preventDefault();
+      var nameEl = document.getElementById("bk-name"), phoneEl = document.getElementById("bk-phone");
+      var name = nameEl.value.trim(), phone = phoneEl.value.trim();
+      if(!name || !phone){
+        msg.textContent = "Add a name and a phone number so we can confirm.";
+        msg.style.color = "var(--red)";
+        (!name ? nameEl : phoneEl).focus();
+        return;
+      }
+      msg.style.color = "var(--ink-soft)";
+      var v = function(id){ return document.getElementById(id).value; };
+      msg.textContent = "Thank you, " + name.split(" ")[0] + " — " + v("bk-guests") +
+        " at " + v("bk-time") + " on " + v("bk-date") + ", " + v("bk-floor").toLowerCase() +
+        ". We'll call to confirm.";
+      f.querySelector('button[type="submit"]').textContent = "Requested";
+    });
+  })();
+})();
+</script>
+</body>
+</html>

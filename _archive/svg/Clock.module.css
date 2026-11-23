@@ -1,0 +1,98 @@
+.clock {
+  background: var(--paper);
+  overflow: hidden;
+}
+.inner {
+  display: grid;
+  justify-items: center;
+  gap: clamp(18px, 2.6vw, 34px);
+  text-align: center;
+}
+.head { display: grid; justify-items: center; gap: 14px; }
+.title { font-size: clamp(2.2rem, 5vw, 4rem); }
+.title > span[aria-hidden] { justify-content: center; }
+.lede {
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  color: var(--ink-soft);
+  max-width: 44ch;
+}
+
+/* dial */
+.stage {
+  position: relative;
+  width: min(84vw, 540px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+.dial { width: 100%; height: 100%; overflow: visible; }
+.num {
+  font-family: var(--font-display), serif;
+  font-size: 23px;
+  fill: var(--ink-soft);
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+  transition: fill 0.6s var(--ease), opacity 0.6s var(--ease);
+}
+.numNow {
+  fill: var(--red);
+  opacity: 1;
+}
+
+.centre {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.cup {
+  width: clamp(92px, 18vw, 152px);
+  height: auto;
+  color: var(--red-deep);
+}
+
+/* status */
+.meta { width: 100%; display: grid; justify-items: center; }
+.statusRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.6em 1.25em;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: 1px solid currentColor;
+}
+.pill i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.on { color: var(--red); }
+.on i { animation: beat 2.4s var(--ease) infinite; }
+.off { color: var(--ink-soft); }
+@keyframes beat {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.45; }
+}
+.note {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 560px) {
+  .stage { width: min(90vw, 420px); }
+  .num { font-size: 27px; }
+}

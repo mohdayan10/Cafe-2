@@ -1,0 +1,87 @@
+.pour {
+  position: relative;
+  background: var(--ink);
+  color: var(--cream);
+  padding-block: clamp(70px, 9vw, 140px);
+  overflow: hidden;
+}
+.pour::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image:
+    linear-gradient(90deg, var(--cream) 50%, transparent 50%),
+    linear-gradient(0deg, var(--cream) 50%, transparent 50%);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+.inner {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: clamp(16px, 2.4vw, 30px);
+  text-align: center;
+}
+.eyebrow { color: var(--gold); }
+.head {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  color: var(--cream);
+}
+/* SplitWords lays its words out in a flex row; centre them */
+.head > span[aria-hidden] { justify-content: center; }
+
+/* the cup */
+.cup {
+  position: relative;
+  margin-block: clamp(6px, 1.4vw, 18px);
+  width: min(72vw, 440px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+.saucer {
+  position: absolute;
+  inset: -7%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 30%, #FFFDF8, #E4D6BC 62%, #BFAE92);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9);
+}
+.canvas {
+  position: relative;
+  width: 86%;
+  height: 86%;
+  border-radius: 50%;
+  display: block;
+  cursor: crosshair;
+  touch-action: none;
+  box-shadow:
+    inset 0 0 40px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(42, 23, 16, 0.5);
+}
+/* ceramic lip over the liquid edge */
+.rim {
+  position: absolute;
+  width: 86%;
+  height: 86%;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 7px #FFFDF8,
+    inset 0 0 14px 7px rgba(42, 23, 16, 0.45);
+}
+
+.hint {
+  width: min(100%, 52ch);
+  margin-inline: auto;
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(251, 243, 228, 0.55);
+}
+
+.inner > *:not(.cup) { width: 100%; }
+
+@media (max-width: 560px) {
+  .cup { width: min(74vw, 330px); }
+}
